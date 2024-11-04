@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stack Implementation</title>
+  </head>
+  <body>
+    <!-- stack -->
+    <h1>Stack</h1>
+    <div>
+      <input type="text" id="elementInput" placeholder="Enter element" />
+      <button onclick="push()">Push</button>
+      <button onclick="clear()">Clear Stack</button>
+    </div>
+    <div id="stackInfo">
+      <p>Stack items: <span id="stackItems"></span></p>
+      <p>Stack size: <span id="stackSize">0</span></p>
+      <p>Is Empty: <span id="isEmpty">true</span></p>
+      <p>Is Full: <span id="isFull">false</span></p>
+    </div>
+
+    <!-- double linked list -->
+    <h1>Double Linked List</h1>
+    <div class="double-linked-controls">
+      <input type="number" id="doubleLinkedInput" placeholder="Enter value" />
+      <button onclick="addFirst()">Add First</button>
+      <button onclick="addLast()">Add Last</button>
+      <button onclick="deleteFirst()">Delete First</button>
+    </div>
+    <div class="double-linked-controls">
+      <input type="number" id="nodeAfter" placeholder="After value:" />
+      <input type="number" id="newData" placeholder="New value:" />
+      <button onclick="insertAfter()">Add After</button>
+    </div>
+    <div class="double-linked-controls">
+      <input type="number" id="deleteNode" placeholder="Enter value:" />
+      <button onclick="deleteNode()">Delete Value</button>
+    </div>
+    <h4>Current list:</h4>
+    <div id="listContent"></div>
+    <h4>Display in two mods:</h4>
+    <button onclick="displayForward()">Forward</button>
+    <button onclick="displayBackward()">Backward</button>
+    <div id="listDisplay"></div>
+
+    <!-- binary search tree -->
+    <h1>Binary Search Tree</h1>
+    <div class="controls">
+      <input type="number" id="nodeValue" placeholder="Enter value:" />
+      <button onclick="insertNode()">Insert</button>
+      <button onclick="searchNode()">Search</button>
+      <button onclick="deleteBinaryNode()">Delete</button>
+      <button onclick="traverseBFS()">Traverse BFS</button>
+      <p>Traverse DFS:</p>
+      <input list="dfsType" onchange="traverseDFS(this.value)" />
+      <datalist id="dfsType">
+        <option value="postorder"></option>
+        <option value="inorder"></option>
+        <option value="preorder"></option>
+      </datalist>
+    </div>
+    <div class="tree-info">
+      <div>
+        <h3>Action result:</h3>
+        <pre id="output"></pre>
+      </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
