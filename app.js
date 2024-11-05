@@ -1,6 +1,6 @@
-import { Stack } from "./src/stack.js";
-import { createBinaryTree } from "./src/binaryTree.js";
-import { doubleLinkedList } from "./src/doubleLinked.js";
+import { Stack } from "./scripts/stack.js";
+import { createBinaryTree } from "./scripts/binaryTree.js";
+import { doubleLinkedList } from "./scripts/doubleLinked.js";
 
 // Stack
 const stack = new Stack([], 5);
@@ -9,7 +9,7 @@ stack.push(5);
 stack.push(10);
 stack.push(2);
 
-window.push = function () {
+window.pushElement = function () {
   const input = document.getElementById("elementInput");
   const element = input.value;
 
@@ -22,7 +22,7 @@ window.push = function () {
   }
 };
 
-window.clear = function () {
+window.clearStack = function () {
   stack.clear();
   updateStackInfo();
 };
@@ -47,7 +47,7 @@ window.updateDisplay = function () {
     : "List is empty";
 };
 
-window.addFirst = function () {
+window.insertFirst = function () {
   const input = document.getElementById("doubleLinkedInput");
   const value = parseInt(input.value);
   try {
@@ -57,7 +57,7 @@ window.addFirst = function () {
       input.value = "";
     }
   } catch {
-    throw window.alert("The entered value is not a number!");
+    throw window.alert("We could not insert your value!");
   }
 };
 
@@ -70,7 +70,7 @@ window.deleteFirst = function () {
   }
 };
 
-window.addLast = function () {
+window.insertLast = function () {
   const input = document.getElementById("doubleLinkedInput");
   const value = parseInt(input.value);
   try {
@@ -80,7 +80,7 @@ window.addLast = function () {
       input.value = "";
     }
   } catch {
-    throw window.alert("The entered value is not a number!");
+    throw window.alert("We could not insert your value!");
   }
 };
 
@@ -104,7 +104,7 @@ window.insertAfter = function () {
     inputNewData.value = "";
     inputNodeData.value = "";
   } catch {
-    throw window.alert("Insertion failed!");
+    throw window.alert("We could not insert your value!");
   }
 };
 
@@ -166,7 +166,7 @@ window.insertNode = function () {
   }
   binaryTree.insert(value);
 
-  window.alert(`Node ${value} has been deleted`);
+  displayOutput(`Node ${value} has been added`);
   document.getElementById("nodeValue").textContent = "";
 };
 

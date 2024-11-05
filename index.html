@@ -8,8 +8,8 @@
     <h1>Stack</h1>
     <div>
       <input type="text" id="elementInput" placeholder="Enter element" />
-      <button onclick="push()">Push</button>
-      <button onclick="clear()">Clear Stack</button>
+      <button onclick="pushElement()">Push</button>
+      <button onclick="clearStack()">Clear Stack</button>
     </div>
     <div id="stackInfo">
       <p>Stack items: <span id="stackItems"></span></p>
@@ -22,9 +22,10 @@
     <h1>Double Linked List</h1>
     <div class="double-linked-controls">
       <input type="number" id="doubleLinkedInput" placeholder="Enter value" />
-      <button onclick="addFirst()">Add First</button>
-      <button onclick="addLast()">Add Last</button>
+      <button onclick="insertFirst()">Add First</button>
+      <button onclick="insertLast()">Add Last</button>
       <button onclick="deleteFirst()">Delete First</button>
+      <button onclick="deleteLast()">Delete Last</button>
     </div>
     <div class="double-linked-controls">
       <input type="number" id="nodeAfter" placeholder="After value:" />

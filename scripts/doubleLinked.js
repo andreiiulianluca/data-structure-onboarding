@@ -7,7 +7,6 @@ const createNode = (data) => ({
 export const doubleLinkedList = () => {
   let head = null;
   let tail = null;
-
   return {
     insertFirst: (data) => {
       const newNode = createNode(data);
@@ -22,11 +21,12 @@ export const doubleLinkedList = () => {
       }
     },
     deleteFirst: () => {
-      if (!head) return null;
-
-      head = head.next;
-      head.prev = null;
-
+      if (!head) {
+        return null;
+      } else {
+        head = head.next;
+        head.prev = null;
+      }
       return true;
     },
     insertLast: (data) => {
@@ -81,9 +81,12 @@ export const doubleLinkedList = () => {
 
       if (nodeToBeDeleted === null) return false;
 
-      nodeToBeDeleted.prev.next = nodeToBeDeleted.next.prev;
-      nodeToBeDeleted.next.prev = nodeToBeDeleted.prev.next;
-      nodeToBeDeleted = null;
+      if (nodeToBeDeleted === head) return this.deleteFirst();
+
+      if (nodeToBeDeleted === tail) return this.deleteLast();
+
+      nodeToBeDeleted.prev.next = nodeToBeDeleted.next;
+      nodeToBeDeleted.next.prev = nodeToBeDeleted.prev;
       return true;
     },
     displayForward: () => {
@@ -106,7 +109,6 @@ export const doubleLinkedList = () => {
         currentNode = currentNode.prev;
       }
 
-      console.log("Tail" + elements.join("<->") + "Head");
       return elements;
     },
   };
