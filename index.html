@@ -8,8 +8,8 @@
     <h1>Stack</h1>
     <div>
       <input type="text" id="elementInput" placeholder="Enter element" />
-      <button onclick="pushElement()">Push</button>
-      <button onclick="clearStack()">Clear Stack</button>
+      <button id="pushButton">Push</button>
+      <button id="clearButton">Clear Stack</button>
     </div>
     <div id="stackInfo">
       <p>Stack items: <span id="stackItems"></span></p>
@@ -22,37 +22,37 @@
     <h1>Double Linked List</h1>
     <div class="double-linked-controls">
       <input type="number" id="doubleLinkedInput" placeholder="Enter value" />
-      <button onclick="insertFirst()">Add First</button>
-      <button onclick="insertLast()">Add Last</button>
-      <button onclick="deleteFirst()">Delete First</button>
-      <button onclick="deleteLast()">Delete Last</button>
+      <button id="insertFirstButton">Add First</button>
+      <button id="insertLastButton">Add Last</button>
+      <button id="deleteFirstButton">Delete First</button>
+      <button id="deleteLastButton">Delete Last</button>
     </div>
     <div class="double-linked-controls">
       <input type="number" id="nodeAfter" placeholder="After value:" />
       <input type="number" id="newData" placeholder="New value:" />
-      <button onclick="insertAfter()">Add After</button>
+      <button id="insertAfterButton">Add After</button>
     </div>
     <div class="double-linked-controls">
       <input type="number" id="deleteNode" placeholder="Enter value:" />
-      <button onclick="deleteNode()">Delete Value</button>
+      <button id="deleteNodeButton">Delete Value</button>
     </div>
     <h4>Current list:</h4>
     <div id="listContent"></div>
     <h4>Display in two mods:</h4>
-    <button onclick="displayForward()">Forward</button>
-    <button onclick="displayBackward()">Backward</button>
+    <button id="displayForwardButton">Forward</button>
+    <button id="displayBackwardButton">Backward</button>
     <div id="listDisplay"></div>
 
     <!-- binary search tree -->
     <h1>Binary Search Tree</h1>
     <div class="controls">
       <input type="number" id="nodeValue" placeholder="Enter value:" />
-      <button onclick="insertNode()">Insert</button>
-      <button onclick="searchNode()">Search</button>
-      <button onclick="deleteBinaryNode()">Delete</button>
-      <button onclick="traverseBFS()">Traverse BFS</button>
+      <button id="insertNodeButton">Insert</button>
+      <button id="searchNodeButton">Search</button>
+      <button id="deleteBinaryNodeButton">Delete</button>
+      <button id="traverseBFSButton">Traverse BFS</button>
       <p>Traverse DFS:</p>
-      <input list="dfsType" onchange="traverseDFS(this.value)" />
+      <input list="dfsType" id="traverseDFSButton" />
       <datalist id="dfsType">
         <option value="postorder"></option>
         <option value="inorder"></option>
@@ -65,7 +65,9 @@
         <pre id="output"></pre>
       </div>
     </div>
-
-    <script type="module" src="./app.js"></script>
+    <script src="./scripts/BinaryTree.js"></script>
+    <script src="./scripts/Stack.js"></script>
+    <script src="./scripts/DoubleLinkedList.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>

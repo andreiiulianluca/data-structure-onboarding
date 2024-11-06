@@ -4,67 +4,93 @@ const createNode = (value) => ({
   right: null,
 });
 
-export const createBinaryTree = () => {
-  let root = null;
+const insertRecursive = (node, value) => {
+  if (node === null) return createNode(value);
 
-  const insertRecursive = (node, value) => {
-    if (node === null) return createNode(value);
+  return value < node.value
+    ? { ...node, left: insertRecursive(node.left, value) }
+    : { ...node, right: insertRecursive(node.right, value) };
+};
 
-    return value < node.value
-      ? { ...node, left: insertRecursive(node.left, value) }
-      : { ...node, right: insertRecursive(node.right, value) };
-  };
+const findMinNode = (node) => {
+  return node.left === null ? node : findMinNode(node.left);
+};
 
-  const findMinNode = (node) => {
-    return node.left === null ? node : findMinNode(node.left);
-  };
+const searchRecursive = (node, value) => {
+  if (node === null || node.value === value) return node;
 
-  const searchRecursive = (node, value) => {
-    if (node === null || node.value === value) return node;
+  return value < node.value
+    ? searchRecursive(node.left, value)
+    : searchRecursive(node.right, value);
+};
 
-    return value < node.value
-      ? searchRecursive(node.left, value)
-      : searchRecursive(node.right, value);
-  };
+const deleteRecursive = (node, value) => {
+  if (node === null) {
+    return true;
+  }
 
-  const deleteRecursive = (node, value) => {
-    if (node === null) {
-      return true;
-    }
-
-    if (value < node.value) {
-      return {
-        ...node,
-        left: deleteRecursive(node.left, value),
-      };
-    }
-
-    if (value > node.value) {
-      return {
-        ...node,
-        right: deleteRecursive(node.right, value),
-      };
-    }
-
-    if (node.left === null && node.right === null) {
-      return null;
-    }
-
-    if (node.left === null) return node.right;
-    if (node.right === null) return node.left;
-
-    const minNode = findMinNode(node.right);
+  if (value < node.value) {
     return {
       ...node,
-      value: minNode.value,
-      right: deleteRecursive(node.right, minNode.value),
+      left: deleteRecursive(node.left, value),
     };
+  }
+
+  if (value > node.value) {
+    return {
+      ...node,
+      right: deleteRecursive(node.right, value),
+    };
+  }
+
+  if (node.left === null && node.right === null) {
+    return null;
+  }
+
+  if (node.left === null) return node.right;
+  if (node.right === null) return node.left;
+
+  const minNode = findMinNode(node.right);
+  return {
+    ...node,
+    value: minNode.value,
+    right: deleteRecursive(node.right, minNode.value),
   };
+};
 
-  const traverseBFS = (callback = (node) => node) => {
-    if (root === null) return [];
+const preorderTraversal = (callback, node, result = []) => {
+  if (node === null) return result;
+  result.push(callback(node));
+  preorderTraversal(node.left, result);
+  preorderTraversal(node.right, result);
+  return result;
+};
 
-    const queue = [root];
+const inorderTraversal = (callback, node, result = []) => {
+  if (node === null) return result;
+  inorderTraversal(node.left, result);
+  result.push(callback(node));
+  inorderTraversal(node.right, result);
+  return result;
+};
+
+const postorderTraversal = (callback, node, result = []) => {
+  if (node === null) return result;
+  postorderTraversal(callback, node.left, result);
+  postorderTraversal(callback, node.right, result);
+  result.push(callback(node));
+  return result;
+};
+
+function BinaryTree() {
+  this.root = null;
+}
+
+Object.assign(BinaryTree.prototype, {
+  traverseBFS: function (callback = (node) => node) {
+    if (this.root === null) return [];
+
+    const queue = [this.root];
     const result = [];
 
     while (queue.length > 0) {
@@ -76,57 +102,36 @@ export const createBinaryTree = () => {
     }
 
     return result;
-  };
+  },
 
-  const traverseDFS = (callback = (node) => node, type) => {
-    if (root === null) return [];
-    let result = [];
-
-    const preorderTraversal = (node, result = []) => {
-      if (node === null) return result;
-      result.push(callback(node));
-      preorderTraversal(node.left, result);
-      preorderTraversal(node.right, result);
-      return result;
-    };
-
-    const inorderTraversal = (node, result = []) => {
-      if (node === null) return result;
-      inorderTraversal(node.left, result);
-      result.push(callback(node));
-      inorderTraversal(node.right, result);
-      return result;
-    };
-
-    const postorderTraversal = (node, result = []) => {
-      if (node === null) return result;
-      postorderTraversal(node.left, result);
-      postorderTraversal(node.right, result);
-      result.push(callback(node));
-      return result;
-    };
+  traverseDFS: function (callback = (node) => node, type) {
+    if (this.root === null) return [];
 
     switch (type) {
       case "preorder":
-        return preorderTraversal(root);
+        return preorderTraversal(callback, this.root, []);
       case "inorder":
-        return inorderTraversal(root);
+        return inorderTraversal(callback, this.root, []);
       case "postorder":
-        return postorderTraversal(root);
+        return postorderTraversal(callback, this.root, []);
+      default:
+        return [];
     }
-    return result;
-  };
+  },
 
-  return {
-    getRoot: () => root,
-    search: (value) => searchRecursive(root, value),
-    insert: (value) => {
-      root = insertRecursive(root, value);
-    },
-    delete: (value) => {
-      root = deleteRecursive(root, value);
-    },
-    traverseBFS,
-    traverseDFS,
-  };
-};
+  getRoot: function () {
+    return this.root;
+  },
+
+  searchNode: function (value) {
+    return searchRecursive(this.root, value);
+  },
+
+  insertNode: function (value) {
+    this.root = insertRecursive(this.root, value);
+  },
+
+  deleteNode: function (value) {
+    this.root = deleteRecursive(this.root, value);
+  },
+});
