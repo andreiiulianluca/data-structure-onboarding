@@ -32,7 +32,7 @@ Object.assign(Stack.prototype, {
   },
 
   getItems: function () {
-    return items;
+    return this.items;
   },
 
   clearStack: function () {

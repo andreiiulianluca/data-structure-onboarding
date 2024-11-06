@@ -61,16 +61,16 @@ const deleteRecursive = (node, value) => {
 const preorderTraversal = (callback, node, result = []) => {
   if (node === null) return result;
   result.push(callback(node));
-  preorderTraversal(node.left, result);
-  preorderTraversal(node.right, result);
+  preorderTraversal(callback, node.left, result);
+  preorderTraversal(callback, node.right, result);
   return result;
 };
 
 const inorderTraversal = (callback, node, result = []) => {
   if (node === null) return result;
-  inorderTraversal(node.left, result);
+  inorderTraversal(callback, node.left, result);
   result.push(callback(node));
-  inorderTraversal(node.right, result);
+  inorderTraversal(callback, node.right, result);
   return result;
 };
 

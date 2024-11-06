@@ -223,9 +223,9 @@ const traverseBFSClickHandler = () => {
 };
 
 const traverseDFSClickHandler = () => {
-  const type = document.getElementById("traverseDFSButton").value;
+  const type = document.getElementById("traverseDFSInput").value;
   const result = binaryTree.traverseDFS((node) => node.value, type);
-  displayTreeInfo("Traversare DFS: " + result.join(" - "));
+  displayTreeInfo(`Traversare DFS (${type}): ` + result.join(" - "));
 };
 
 document
