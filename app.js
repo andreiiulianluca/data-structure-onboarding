@@ -9,10 +9,24 @@ const pushButtonClickHandler = () => {
   const input = document.getElementById("elementInput");
   const element = input.value;
 
+  if (!element || isNaN(element)) {
+    alert("The input value is either empty or a non numerical value");
+    return;
+  }
+
   try {
     stack.pushElement(element);
     displayStackInfo();
     input.value = "";
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+const popButtonClickHandler = () => {
+  try {
+    stack.popElement();
+    displayStackInfo();
   } catch (error) {
     alert(error.message);
   }
@@ -33,6 +47,9 @@ const displayStackInfo = () => {
 displayStackInfo();
 
 document
+  .getElementById("popButton")
+  .addEventListener("click", popButtonClickHandler);
+document
   .getElementById("pushButton")
   .addEventListener("click", pushButtonClickHandler);
 document
@@ -45,8 +62,10 @@ let list = new DoubleLinkedList();
 const displayListInfo = () => {
   const display = document.getElementById("listContent");
   const elements = list.displayForward();
+  const length = list.length;
+
   display.textContent = elements.length
-    ? elements.join(" <>")
+    ? elements.join(" <>") + ` - Length: ${length}`
     : "List is empty";
 };
 
@@ -106,8 +125,8 @@ const insertAfterClickHandler = () => {
     displayListInfo();
     inputNewData.value = "";
     inputNodeData.value = "";
-  } catch {
-    throw alert("We could not insert your value!");
+  } catch (error) {
+    throw alert(error.message);
   }
 };
 
@@ -186,7 +205,11 @@ const insertNodeClickHandler = () => {
     alert("Please enter a numerical value!");
     return;
   }
-  binaryTree.insertNode(value);
+  try {
+    binaryTree.insertNode(value);
+  } catch (error) {
+    alert(error.message);
+  }
 
   displayTreeInfo(`Node ${value} has been added`);
   document.getElementById("nodeValue").textContent = "";

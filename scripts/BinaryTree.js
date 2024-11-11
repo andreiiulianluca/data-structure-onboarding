@@ -1,61 +1,11 @@
-const createNode = (value) => ({
-  value,
-  left: null,
-  right: null,
-});
-
-const insertRecursive = (node, value) => {
-  if (node === null) return createNode(value);
-
-  return value < node.value
-    ? { ...node, left: insertRecursive(node.left, value) }
-    : { ...node, right: insertRecursive(node.right, value) };
-};
+function BinaryNode(value) {
+  this.value = value;
+  this.left = null;
+  this.right = null;
+}
 
 const findMinNode = (node) => {
   return node.left === null ? node : findMinNode(node.left);
-};
-
-const searchRecursive = (node, value) => {
-  if (node === null || node.value === value) return node;
-
-  return value < node.value
-    ? searchRecursive(node.left, value)
-    : searchRecursive(node.right, value);
-};
-
-const deleteRecursive = (node, value) => {
-  if (node === null) {
-    return true;
-  }
-
-  if (value < node.value) {
-    return {
-      ...node,
-      left: deleteRecursive(node.left, value),
-    };
-  }
-
-  if (value > node.value) {
-    return {
-      ...node,
-      right: deleteRecursive(node.right, value),
-    };
-  }
-
-  if (node.left === null && node.right === null) {
-    return null;
-  }
-
-  if (node.left === null) return node.right;
-  if (node.right === null) return node.left;
-
-  const minNode = findMinNode(node.right);
-  return {
-    ...node,
-    value: minNode.value,
-    right: deleteRecursive(node.right, minNode.value),
-  };
 };
 
 const preorderTraversal = (callback, node, result = []) => {
@@ -119,19 +69,73 @@ Object.assign(BinaryTree.prototype, {
     }
   },
 
+  searchRecursive: function (node, value) {
+    if (node === null) return node;
+    if (node.value === value) return true;
+    return value < node.value
+      ? this.searchRecursive(node.left, value)
+      : this.searchRecursive(node.right, value);
+  },
+
+  deleteRecursive: function (node, value) {
+    if (node === null) {
+      return null;
+    }
+
+    if (value < node.value) {
+      node.left = this.deleteRecursive(node.left, value);
+    } else if (value > node.value) {
+      node.right = this.deleteRecursive(node.right, value);
+    } else {
+      if (node.left === null && node.right === null) {
+        return null;
+      }
+
+      if (node.left === null) {
+        return node.right;
+      }
+      if (node.right === null) {
+        return node.left;
+      }
+
+      let minNode = findMinNode(node.right);
+      node.value = minNode.value;
+      node.right = this.deleteRecursive(node.right, minNode.value);
+    }
+
+    return node;
+  },
+
+  insertRecursive: function (node, value) {
+    if (node === null) {
+      newNode = new BinaryNode(value);
+      return newNode;
+    }
+    if (this.searchNode(value))
+      throw new Error("This value has been already added!");
+
+    if (value < node.value) {
+      node.left = this.insertRecursive(node.left, value);
+    } else {
+      node.right = this.insertRecursive(node.right, value);
+    }
+
+    return node;
+  },
+
   getRoot: function () {
     return this.root;
   },
 
   searchNode: function (value) {
-    return searchRecursive(this.root, value);
+    return this.searchRecursive(this.root, value);
   },
 
   insertNode: function (value) {
-    this.root = insertRecursive(this.root, value);
+    this.root = this.insertRecursive(this.root, value);
   },
 
   deleteNode: function (value) {
-    this.root = deleteRecursive(this.root, value);
+    this.root = this.deleteRecursive(this.root, value);
   },
 });

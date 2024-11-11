@@ -12,6 +12,13 @@ Object.assign(Stack.prototype, {
     return true;
   },
 
+  popElement: function () {
+    if (this.checkIsEmpty()) {
+      throw new Error("The Stack is empty!");
+    }
+    return this.items.pop();
+  },
+
   getTop: function () {
     if (this.isEmpty()) {
       return null;

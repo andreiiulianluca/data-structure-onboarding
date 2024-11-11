@@ -1,17 +1,19 @@
-const createListNode = (value) => ({
-  value,
-  prev: null,
-  next: null,
-});
+function DoubleLinkedNode(value) {
+  this.value = value;
+  this.prev = null;
+  this.next = null;
+}
 
 function DoubleLinkedList() {
   this.head = null;
   this.tail = null;
+  this.length = 0;
 }
 
 Object.assign(DoubleLinkedList.prototype, {
   insertFirst: function (value) {
-    const newNode = createListNode(value);
+    const newNode = new DoubleLinkedNode(value);
+    this.length++;
 
     if (!this.head) {
       this.head = newNode;
@@ -27,6 +29,8 @@ Object.assign(DoubleLinkedList.prototype, {
     if (!this.head) {
       return null;
     }
+
+    this.length--;
     if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
@@ -38,7 +42,8 @@ Object.assign(DoubleLinkedList.prototype, {
   },
 
   insertLast: function (value) {
-    const newNode = createListNode(value);
+    const newNode = new DoubleLinkedNode(value);
+    this.length++;
 
     if (!this.tail) {
       this.head = newNode;
@@ -54,6 +59,8 @@ Object.assign(DoubleLinkedList.prototype, {
     if (!this.tail) {
       return null;
     }
+
+    this.length--;
     if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
@@ -71,9 +78,14 @@ Object.assign(DoubleLinkedList.prototype, {
       currentNode = currentNode.next;
     }
 
-    if (currentNode === null) return false;
+    if (currentNode === null) {
+      throw new Error(
+        "The targeted value was not found. We could not insert your value!"
+      );
+    }
 
-    const newNode = createListNode(newValue);
+    const newNode = new DoubleLinkedNode(newValue);
+    this.length++;
 
     newNode.next = currentNode.next;
     newNode.prev = currentNode;
@@ -101,6 +113,7 @@ Object.assign(DoubleLinkedList.prototype, {
 
     if (nodeToBeDeleted === this.tail) return this.deleteLast();
 
+    this.length--;
     nodeToBeDeleted.prev.next = nodeToBeDeleted.next;
     nodeToBeDeleted.next.prev = nodeToBeDeleted.prev;
     return true;
