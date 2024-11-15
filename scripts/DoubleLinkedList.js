@@ -103,20 +103,33 @@ Object.assign(DoubleLinkedList.prototype, {
   deleteNode: function (value) {
     let nodeToBeDeleted = this.head;
 
-    while (nodeToBeDeleted !== null && nodeToBeDeleted.value !== value) {
+    let deletedAny = false;
+
+    while (nodeToBeDeleted !== null) {
+      if (nodeToBeDeleted.value === value) {
+        if (nodeToBeDeleted === this.head) {
+          this.head = nodeToBeDeleted.next;
+          if (this.head) {
+            this.head.prev = null;
+          }
+        } else if (nodeToBeDeleted === this.tail) {
+          this.tail = nodeToBeDeleted.prev;
+          if (this.tail) {
+            this.tail.next = null;
+          }
+        } else {
+          nodeToBeDeleted.prev.next = nodeToBeDeleted.next;
+          nodeToBeDeleted.next.prev = nodeToBeDeleted.prev;
+        }
+
+        this.length--;
+        deletedAny = true;
+      }
+
       nodeToBeDeleted = nodeToBeDeleted.next;
     }
 
-    if (nodeToBeDeleted === null) return false;
-
-    if (nodeToBeDeleted === this.head) return this.deleteFirst();
-
-    if (nodeToBeDeleted === this.tail) return this.deleteLast();
-
-    this.length--;
-    nodeToBeDeleted.prev.next = nodeToBeDeleted.next;
-    nodeToBeDeleted.next.prev = nodeToBeDeleted.prev;
-    return true;
+    return deletedAny;
   },
 
   displayForward: function () {
